@@ -24,10 +24,10 @@
     a4paper,
     left=27mm,
     right=16.5mm,
-    top=17mm,
-    bottom=17.5mm,
+    top=16.2mm,
+    bottom=16.8mm,
     headheight=12pt,
-    footskip=9mm
+    footskip=8.8mm
   }
 \fi
 
@@ -59,7 +59,7 @@
 \setCJKfamilyfont{zhxbs}[BoldFont={Noto Serif CJK SC Bold}]{Noto Serif CJK SC}
 \newcommand{\xiaobiaosong}{\CJKfamily{zhxbs}\bfseries}
 
-\linespread{1.20}
+\linespread{1.15}
 \setlength{\parindent}{2em}
 \setlength{\parskip}{0pt}
 
@@ -193,7 +193,7 @@
 
 % Listening transcript block (compact Fangsong/Kaiti inset, kept with following question)
 \newenvironment{ListeningScript}[1]{%
-  \needspace{6\baselineskip}%
+  \needspace{8.5\baselineskip}%
   \par\vspace{2pt}%
   \begingroup
   \fontsize{9.3pt}{12.8pt}\selectfont\fangsong
@@ -209,7 +209,7 @@
 
 \newcommand{\qstem}[2]{%
   \needspace{2.8\baselineskip}%
-  \par\vspace{1.8pt}\noindent
+  \par\vspace{1.1pt}\noindent
   \hangindent=1.8em\hangafter=1
   \makebox[1.8em][l]{#1.}#2\par\nopagebreak[4]
 }
@@ -292,7 +292,7 @@
 }
 
 \newcommand{\clozerow}[5]{%
-  \par\vspace{1pt}\noindent
+  \par\vspace{0.3pt}\noindent
   \makebox[1.9em][l]{#1.}%
   \begingroup
   \setlength{\choiceavailw}{\linewidth - 1.9em}%
@@ -322,7 +322,7 @@
 
 % Seven-choose-five option item
 \newcommand{\sevenopt}[2]{%
-  \par\vspace{1.5pt}\noindent
+  \par\vspace{0.5pt}\noindent
   \hangindent=1.9em\hangafter=1
   \makebox[1.9em][l]{#1.}#2\par
 }
