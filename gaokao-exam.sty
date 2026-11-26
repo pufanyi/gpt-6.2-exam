@@ -1,0 +1,362 @@
+% gaokao-exam.sty — Authentic NEEA Chinese Gaokao Foreign Language Exam Style
+% Compile with XeLaTeX
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gaokao-exam}[2026/11/26 Authentic Gaokao Foreign Language Exam Style]
+
+\newif\ifgaokao@answerkey
+\gaokao@answerkeyfalse
+\DeclareOption{answerkey}{\gaokao@answerkeytrue}
+\ProcessOptions\relax
+
+\RequirePackage{geometry}
+\ifgaokao@answerkey
+  \geometry{
+    a4paper,
+    left=22mm,
+    right=22mm,
+    top=22mm,
+    bottom=22mm,
+    headheight=12pt,
+    footskip=11mm
+  }
+\else
+  \geometry{
+    a4paper,
+    left=27mm,
+    right=16.5mm,
+    top=17mm,
+    bottom=17.5mm,
+    headheight=12pt,
+    footskip=9mm
+  }
+\fi
+
+\RequirePackage{fontspec}
+\RequirePackage{xeCJKfntef}
+\RequirePackage[normalem]{ulem}
+\RequirePackage{tikz}
+\RequirePackage{eso-pic}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\RequirePackage{enumitem}
+\RequirePackage{tabularx}
+\RequirePackage{multicol}
+\RequirePackage{needspace}
+\RequirePackage{calc}
+\RequirePackage{xparse}
+\RequirePackage{array}
+\RequirePackage{booktabs}
+
+% ============================================================================
+% 1. AUTHENTIC GAOKAO FONTS (CJK + Times-like Latin Serif)
+% ============================================================================
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+
+\setCJKfamilyfont{zhkai}[Extension=.otf, AutoFakeBold=2.2]{FandolKai-Regular}
+\setCJKfamilyfont{zhfs}[Extension=.otf, AutoFakeBold=2.2]{FandolFang-Regular}
+\setCJKfamilyfont{zhxbs}[BoldFont={Noto Serif CJK SC Bold}]{Noto Serif CJK SC}
+\newcommand{\xiaobiaosong}{\CJKfamily{zhxbs}\bfseries}
+
+\linespread{1.20}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+
+% Breakable CJK/mixed underline for vocabulary-in-context questions
+\newcommand{\uword}[1]{\CJKunderline{#1}}
+
+% ============================================================================
+% 2. HEADER / FOOTER
+% ============================================================================
+\ifgaokao@answerkey
+  \newcommand{\ExamSubjectFooter}{外语（GPT 语）参考答案及评分参考}
+\else
+  \newcommand{\ExamSubjectFooter}{外语（GPT 语）试题}
+\fi
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\fontsize{9pt}{12pt}\selectfont\songti \ExamSubjectFooter\quad 第~\thepage~页（共~\pageref{LastPage}~页）}
+
+% ============================================================================
+% 3. LEFT-MARGIN SEALING LINE (弥封线) FOR EXAM PAPER
+% ============================================================================
+\newcommand{\sealingboxes}[1]{%
+  \tikz[baseline=-0.55ex]{%
+    \foreach \i in {1,...,#1} {%
+      \draw[line width=0.45pt] ({(\i-1)*4.2mm}, -1.9mm) rectangle ({\i*4.2mm}, 2.9mm);%
+    }%
+  }%
+}
+
+\ifgaokao@answerkey\else
+\AddToShipoutPictureBG{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw[dashed, line width=0.6pt, dash pattern=on 4pt off 3pt]
+      ([xshift=19.5mm, yshift=16mm]current page.south west) --
+      ([xshift=19.5mm, yshift=82mm]current page.south west);
+    \node[rotate=90, anchor=center, inner sep=0pt]
+      at ([xshift=19.5mm, yshift=104mm]current page.south west)
+      {\fontsize{9pt}{9pt}\selectfont\kaishu 弥\hspace{0.25em}封\hspace{0.25em}线\hspace{0.25em}内\hspace{0.25em}不\hspace{0.25em}要\hspace{0.25em}答\hspace{0.25em}题};
+    \draw[dashed, line width=0.6pt, dash pattern=on 4pt off 3pt]
+      ([xshift=19.5mm, yshift=126mm]current page.south west) --
+      ([xshift=19.5mm, yshift=171mm]current page.south west);
+    \node[rotate=90, anchor=center, inner sep=0pt]
+      at ([xshift=19.5mm, yshift=193mm]current page.south west)
+      {\fontsize{9pt}{9pt}\selectfont\kaishu 弥\hspace{0.25em}封\hspace{0.25em}线\hspace{0.25em}内\hspace{0.25em}不\hspace{0.25em}要\hspace{0.25em}答\hspace{0.25em}题};
+    \draw[dashed, line width=0.6pt, dash pattern=on 4pt off 3pt]
+      ([xshift=19.5mm, yshift=215mm]current page.south west) --
+      ([xshift=19.5mm, yshift=281mm]current page.south west);
+
+    \ifnum\value{page}=1
+      \node[rotate=90, anchor=center, inner sep=0pt]
+        at ([xshift=11.0mm, yshift=0.5\paperheight]current page.south west) {%
+          \fontsize{10pt}{10pt}\selectfont\songti
+          姓\hspace{0.5em}名：\underline{\hbox to 32mm{}}\hspace{1.8em}%
+          准考证号：\sealingboxes{9}\hspace{1.8em}%
+          考场号：\sealingboxes{2}\hspace{1.8em}%
+          座位号：\sealingboxes{2}%
+        };
+    \fi
+  \end{tikzpicture}%
+}
+\fi
+
+% ============================================================================
+% 4. GAOKAO TITLE BANNER & SECTION HEADINGS
+% ============================================================================
+\newcommand{\gaokaostar}{%
+  \tikz[baseline=-0.55ex]{%
+    \fill[nonzero rule]
+      (90:0.72ex) -- (234:0.72ex) -- (18:0.72ex) -- (162:0.72ex) -- (306:0.72ex) -- cycle;
+  }%
+}
+
+\NewDocumentCommand{\GaokaoTitleBlock}{m m m O{试卷类型：A}}{%
+  \begingroup
+  \parindent=0pt
+  \noindent
+  \tikz[baseline=(badge.base)]{%
+    \node[draw=black, line width=0.7pt, inner xsep=5pt, inner ysep=2.5pt] (badge)
+      {\fontsize{10.5pt}{10.5pt}\selectfont\heiti\bfseries 绝密~\gaokaostar~启用前};
+  }%
+  \hfill
+  {\fontsize{10.5pt}{10.5pt}\selectfont\heiti\bfseries #4}\par
+  \vspace{3mm}
+  \begin{center}
+    {\fontsize{17.5pt}{23pt}\selectfont\xiaobiaosong #1}\\[2.8mm]
+    {\fontsize{23pt}{28pt}\selectfont\heiti\bfseries #2}\\[2.2mm]
+    {\fontsize{10.5pt}{14pt}\selectfont\kaishu #3}
+  \end{center}
+  \vspace{-1.5mm}
+  \endgroup
+}
+
+\newenvironment{GaokaoNotice}{%
+  \par\smallskip\noindent
+  {\fontsize{10.5pt}{15pt}\selectfont\heiti\bfseries 注意事项：}\par
+  \begingroup
+  \fontsize{9.8pt}{14pt}\selectfont\fangsong
+  \begin{enumerate}[label=\arabic*．, leftmargin=2.3em, labelsep=0pt, itemsep=1pt, topsep=2pt, parsep=0pt]
+}{%
+  \end{enumerate}
+  \endgroup
+  \vspace{1.5mm}
+}
+
+\newcommand{\GaokaoPart}[2]{%
+  \needspace{8\baselineskip}%
+  \vspace{2.4mm}%
+  \begin{center}
+    {\fontsize{12.5pt}{16.5pt}\selectfont\heiti\bfseries #1\quad #2}
+  \end{center}
+  \nopagebreak[4]\vspace{0.5mm}%
+}
+
+\newcommand{\GaokaoSection}[2]{%
+  \needspace{5\baselineskip}%
+  \vspace{1.2mm}%
+  \noindent{\fontsize{10.5pt}{14.5pt}\selectfont\heiti\bfseries #1}{\fontsize{10.5pt}{14.5pt}\selectfont\songti\bfseries #2}\par\nopagebreak[4]
+  \vspace{0.3mm}%
+}
+
+\newcommand{\PassageHeader}[1]{%
+  \needspace{5\baselineskip}%
+  \vspace{1.6mm}%
+  \begin{center}
+    {\fontsize{11.5pt}{14.5pt}\selectfont\bfseries #1}
+  \end{center}
+  \nopagebreak[4]\vspace{0.3mm}%
+}
+
+% Listening transcript block (compact Fangsong/Kaiti inset, kept with following question)
+\newenvironment{ListeningScript}[1]{%
+  \needspace{6\baselineskip}%
+  \par\vspace{2pt}%
+  \begingroup
+  \fontsize{9.3pt}{12.8pt}\selectfont\fangsong
+  \leftskip=1.0em
+  \rightskip=0.3em
+  \parindent=0pt
+  \noindent{\kaishu\bfseries 【#1】}\par\nopagebreak[4]
+  \vspace{0.5pt}%
+}{%
+  \par\endgroup
+  \nopagebreak[4]\vspace{0.5pt}%
+}
+
+\newcommand{\qstem}[2]{%
+  \needspace{2.8\baselineskip}%
+  \par\vspace{1.8pt}\noindent
+  \hangindent=1.8em\hangafter=1
+  \makebox[1.8em][l]{#1.}#2\par\nopagebreak[4]
+}
+
+% ============================================================================
+% 5. AUTO-ALIGNED 3-CHOICE & 4-CHOICE MACROS
+% ============================================================================
+\newsavebox{\choiceboxA}
+\newsavebox{\choiceboxB}
+\newsavebox{\choiceboxC}
+\newsavebox{\choiceboxD}
+\newlength{\choicemaxw}
+\newlength{\choiceavailw}
+\newlength{\choicethirdw}
+\newlength{\choicequartw}
+\newlength{\choicehalfw}
+
+\newcommand{\threechoices}[3]{%
+  \par\nopagebreak[4]%
+  \begingroup
+  \setlength{\choiceavailw}{\linewidth - 1.8em}%
+  \sbox{\choiceboxA}{A.~#1}%
+  \sbox{\choiceboxB}{B.~#2}%
+  \sbox{\choiceboxC}{C.~#3}%
+  \setlength{\choicemaxw}{\wd\choiceboxA}%
+  \ifdim\wd\choiceboxB>\choicemaxw \setlength{\choicemaxw}{\wd\choiceboxB}\fi
+  \ifdim\wd\choiceboxC>\choicemaxw \setlength{\choicemaxw}{\wd\choiceboxC}\fi
+  \setlength{\choicethirdw}{0.333\choiceavailw - 0.8em}%
+  \ifdim\choicemaxw<\choicethirdw
+    \noindent\hspace*{1.8em}%
+    \makebox[0.333\choiceavailw][l]{\usebox{\choiceboxA}}%
+    \makebox[0.333\choiceavailw][l]{\usebox{\choiceboxB}}%
+    \makebox[0.333\choiceavailw][l]{\usebox{\choiceboxC}}\par
+  \else
+    \noindent\hangindent=3.4em\hangafter=1\hspace*{1.8em}\makebox[1.6em][l]{A.}#1\par
+    \nopagebreak[3]\noindent\hangindent=3.4em\hangafter=1\hspace*{1.8em}\makebox[1.6em][l]{B.}#2\par
+    \nopagebreak[3]\noindent\hangindent=3.4em\hangafter=1\hspace*{1.8em}\makebox[1.6em][l]{C.}#3\par
+  \fi
+  \endgroup
+  \vspace{1.5pt}%
+}
+
+\newcommand{\fourchoices}[4]{%
+  \par\nopagebreak[4]%
+  \begingroup
+  \setlength{\choiceavailw}{\linewidth - 1.8em}%
+  \sbox{\choiceboxA}{A.~#1}%
+  \sbox{\choiceboxB}{B.~#2}%
+  \sbox{\choiceboxC}{C.~#3}%
+  \sbox{\choiceboxD}{D.~#4}%
+  \setlength{\choicemaxw}{\wd\choiceboxA}%
+  \ifdim\wd\choiceboxB>\choicemaxw \setlength{\choicemaxw}{\wd\choiceboxB}\fi
+  \ifdim\wd\choiceboxC>\choicemaxw \setlength{\choicemaxw}{\wd\choiceboxC}\fi
+  \ifdim\wd\choiceboxD>\choicemaxw \setlength{\choicemaxw}{\wd\choiceboxD}\fi
+  \setlength{\choicequartw}{0.25\choiceavailw - 0.85em}%
+  \setlength{\choicehalfw}{0.50\choiceavailw - 0.95em}%
+  \ifdim\choicemaxw<\choicequartw
+    \noindent\hspace*{1.8em}%
+    \makebox[0.25\choiceavailw][l]{\usebox{\choiceboxA}}%
+    \makebox[0.25\choiceavailw][l]{\usebox{\choiceboxB}}%
+    \makebox[0.25\choiceavailw][l]{\usebox{\choiceboxC}}%
+    \makebox[0.25\choiceavailw][l]{\usebox{\choiceboxD}}\par
+  \else
+    \ifdim\choicemaxw<\choicehalfw
+      \noindent\hspace*{1.8em}%
+      \makebox[0.50\choiceavailw][l]{\usebox{\choiceboxA}}%
+      \makebox[0.50\choiceavailw][l]{\usebox{\choiceboxB}}\par
+      \nopagebreak[4]\noindent\hspace*{1.8em}%
+      \makebox[0.50\choiceavailw][l]{\usebox{\choiceboxC}}%
+      \makebox[0.50\choiceavailw][l]{\usebox{\choiceboxD}}\par
+    \else
+      \noindent\hangindent=3.4em\hangafter=1\hspace*{1.8em}\makebox[1.6em][l]{A.}#1\par
+      \nopagebreak[3]\noindent\hangindent=3.4em\hangafter=1\hspace*{1.8em}\makebox[1.6em][l]{B.}#2\par
+      \nopagebreak[3]\noindent\hangindent=3.4em\hangafter=1\hspace*{1.8em}\makebox[1.6em][l]{C.}#3\par
+      \nopagebreak[3]\noindent\hangindent=3.4em\hangafter=1\hspace*{1.8em}\makebox[1.6em][l]{D.}#4\par
+    \fi
+  \fi
+  \endgroup
+  \vspace{1.5pt}%
+}
+
+\newcommand{\clozerow}[5]{%
+  \par\vspace{1pt}\noindent
+  \makebox[1.9em][l]{#1.}%
+  \begingroup
+  \setlength{\choiceavailw}{\linewidth - 1.9em}%
+  \sbox{\choiceboxA}{A.~#2}%
+  \sbox{\choiceboxB}{B.~#3}%
+  \sbox{\choiceboxC}{C.~#4}%
+  \sbox{\choiceboxD}{D.~#5}%
+  \setlength{\choicemaxw}{\wd\choiceboxA}%
+  \ifdim\wd\choiceboxB>\choicemaxw \setlength{\choicemaxw}{\wd\choiceboxB}\fi
+  \ifdim\wd\choiceboxC>\choicemaxw \setlength{\choicemaxw}{\wd\choiceboxC}\fi
+  \ifdim\wd\choiceboxD>\choicemaxw \setlength{\choicemaxw}{\wd\choiceboxD}\fi
+  \setlength{\choicequartw}{0.25\choiceavailw - 0.65em}%
+  \ifdim\choicemaxw<\choicequartw
+    \makebox[0.25\choiceavailw][l]{\usebox{\choiceboxA}}%
+    \makebox[0.25\choiceavailw][l]{\usebox{\choiceboxB}}%
+    \makebox[0.25\choiceavailw][l]{\usebox{\choiceboxC}}%
+    \makebox[0.25\choiceavailw][l]{\usebox{\choiceboxD}}\par
+  \else
+    \makebox[0.50\choiceavailw][l]{\usebox{\choiceboxA}}%
+    \makebox[0.50\choiceavailw][l]{\usebox{\choiceboxB}}\par
+    \nopagebreak[4]\noindent\hspace*{1.9em}%
+    \makebox[0.50\choiceavailw][l]{\usebox{\choiceboxC}}%
+    \makebox[0.50\choiceavailw][l]{\usebox{\choiceboxD}}\par
+  \fi
+  \endgroup
+}
+
+% Seven-choose-five option item
+\newcommand{\sevenopt}[2]{%
+  \par\vspace{1.5pt}\noindent
+  \hangindent=1.9em\hangafter=1
+  \makebox[1.9em][l]{#1.}#2\par
+}
+
+% ============================================================================
+% 6. BLANK LINES & ESSAY GRIDS
+% ============================================================================
+\newcommand{\blank}[2][2.4em]{%
+  \allowbreak\underline{\hbox to #1{\hss\rule[-0.3ex]{0pt}{1.2ex}\textbf{#2}\hss}}\allowbreak
+}
+
+\newcount\essaylinecnt
+\newcommand{\essaylines}[1]{%
+  \par\vspace{1.6mm}%
+  \begingroup
+  \parindent=0pt
+  \essaylinecnt=0
+  \loop\ifnum\essaylinecnt<#1
+    \advance\essaylinecnt by 1
+    \noindent\tikz\draw[line width=0.45pt, black!80] (0,0) -- (\linewidth,0);\par
+    \vspace{3.3mm}%
+  \repeat
+  \endgroup
+}
+
+% Continuation Writing Paragraph Starter (wraps naturally + fills remainder of line with rule)
+\newcommand{\continuationpara}[3]{%
+  \needspace{3.5\baselineskip}%
+  \par\vspace{1.4mm}\noindent
+  {\bfseries #1}\par\nopagebreak[4]
+  \vspace{0.6mm}\noindent
+  \hspace*{2em}{\kaishu #2}\hspace{0.2em}\leaders\hbox{\rule[-0.35ex]{1pt}{0.45pt}}\hfill\kern0pt\par
+  \vspace{1.7mm}%
+  \essaylines{#3}%
+}
+
+\endinput
