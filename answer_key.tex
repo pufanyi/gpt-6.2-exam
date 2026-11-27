@@ -3,10 +3,10 @@
 \usepackage[answerkey]{gaokao-exam}
 
 % 各页正文（不含页脚，去除空白字符后按 UTF-8 编码）SHA-256 摘要
-\SetPageHash{1}{8fb36f3f8ab7f30f7c270d5a109e7327847efc372f85470cb4e75df4c1e99237}
+\SetPageHash{1}{f54bfbfd22f90ea3e28e0afbdec0448cf6ec384c808b2e48d6850a31003f2383}
 \SetPageHash{2}{873fa0704a6fd84013c0f775f01d144f3662b6109eb280d19a7cd2ed7117e698}
-\SetPageHash{3}{2e3d9f76e7d1a8c833947bec96f9455dab2dff34afabbe469e626a30d85bb89d}
-\SetPageHash{4}{a8e635808e00443778a728673d1685d2a0836a66c8f4f39fe66f0667b0cc70c3}
+\SetPageHash{3}{679337093c0e656fa6858a73c4d95aa1b17114d70fe906a7f369d8b5ecbd85f0}
+\SetPageHash{4}{a3c24d5b2a197060f1dbed939e4ddbd13bfc71cba17ce92734544dede814d141}
 
 \begin{document}
 
@@ -41,15 +41,15 @@
 
 \begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=2.2em, itemsep=2pt, topsep=3pt]
   \item \textbf{B}\quad 脚本、示例配置和测试均已修改，目前仍在工作区，尚未提交。
-  \item \textbf{A}\quad 母亲挑了小梨。“留四个”是女士随后建议的数量。
+  \item \textbf{A}\quad 母亲挑了小梨。“留四个”是 \atag~随后建议的数量。
   \item \textbf{C}\quad 接口签名仍接受旧参数，实际超时仍为三十秒。
   \item \textbf{B}\quad 断言前排序保留了列表项数；少一项时两边长度仍不相等。
   \item \textbf{A}\quad 第二个文件保存本次复制的校验记录，测试只读取配置。
   \item \textbf{C}\quad 首次“通过”仅指三个单表样例，真实附件随后才打开测试。
   \item \textbf{B}\quad 两班表头逐字相同，可排除表头差异。
   \item \textbf{C}\quad 双进程抢锁用例依赖 Redis，首次运行时该服务未启动。
-  \item \textbf{A}\quad 男士启动了 Redis 后重跑，测试用例未改动。
-  \item \textbf{B}\quad 两个进程均记为取得同一把锁且中间无释放，重现了女士报告的现象。
+  \item \textbf{A}\quad \atag~启动了 Redis 后重跑，测试用例未改动。
+  \item \textbf{B}\quad 两个进程均记为取得同一把锁且中间无释放，重现了 \utag~报告的现象。
 \end{enumerate}
 
 % ============================================================================
@@ -75,7 +75,7 @@
 \begin{enumerate}[label=\textbf{\arabic*.}, start=11, leftmargin=2.2em, itemsep=2pt, topsep=3pt]
   \item \textbf{C}\quad 第三行建议保留并行设置，记录各进程使用的资源名排查重名。
   \item \textbf{A}\quad 保留失败时的次序并移除其余用例，可检验这一对能否单独重现故障。
-  \item \textbf{D}\quad 用户只报告了单跑和整组的结果，尚未确定“那一对”中的前序用例。
+  \item \textbf{D}\quad \utag~只报告了单跑和整组的结果，尚未确定“那一对”中的前序用例。
   \item \textbf{B}\quad 重试从函数开头再次执行，写库与通知均在其中。
   \item \textbf{C}\quad 通知替身首次调用即成功，测试未触发重试。
   \item \textbf{A}\quad 先触发通知重试，再核对余额，可检验积分是否重复入账。
@@ -182,7 +182,7 @@
 \vspace{-2pt}
 \end{quote}
 
-\noindent{\small\textbf{评注：}“上午我先整理一版兼容方案发您”由助理添入；按末句说明替换后，发出的是“周一我们先碰一下兼容方案”，李华只答应了这一步。考生直接采用替换后的表述（见参考作答二），同等给分。}
+\noindent{\small\textbf{评注：}“上午我先整理一版兼容方案发您”由 \atag~添入；按末句说明替换后，发出的是“周一我们先碰一下兼容方案”，李华只答应了这一步。考生直接采用替换后的表述（见参考作答二），同等给分。}
 
 \smallskip
 \needspace{5\baselineskip}
@@ -225,7 +225,7 @@
   \item \textbf{故障判断（7 分）：}说明应撤去空格及其平移分块位置的作用（3 分），结合 \texttt{E6} 与 \texttt{A1 A5} 解释逐块独立解码为何输出替换符（4 分）。
   \item \textbf{单测分析（4 分）：}指出整串一次传入绕过了跨块情形（3 分），说明重复十次未改变分块方式（1 分）。
   \item \textbf{修改与验证（10 分）：}跨块保留解码状态并在文件末尾结束解码（4 分），覆盖两个切分位点（4 分），逐字核对完整输出（2 分；手动暂存块尾残余字节等等效方案同等给分）。
-  \item \textbf{表达与结论（4 分）：}以助理身份直接回答用户、步骤清楚（2 分），结论口径与实际覆盖范围一致（2 分）。
+  \item \textbf{表达与结论（4 分）：}以 \atag~身份直接回答 \utag、步骤清楚（2 分），结论口径与实际覆盖范围一致（2 分）。
 \end{enumerate}
 
 \begin{itemize}[leftmargin=1.8em, itemsep=0.5pt, topsep=1.5pt]
