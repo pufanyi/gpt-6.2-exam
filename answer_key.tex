@@ -3,10 +3,10 @@
 \usepackage[answerkey]{gaokao-exam}
 
 % 各页正文（不含页脚，去除空白字符后按 UTF-8 编码）SHA-256 摘要
-\SetPageHash{1}{98dcff5c975261275256513e223721395e38b0c676cdb167154baf0b556456f7}
-\SetPageHash{2}{f2a3606ce0c9a7c374559e91de799fb7e2e8653e3c1b34b7935a83bb66cd5569}
+\SetPageHash{1}{8fb36f3f8ab7f30f7c270d5a109e7327847efc372f85470cb4e75df4c1e99237}
+\SetPageHash{2}{873fa0704a6fd84013c0f775f01d144f3662b6109eb280d19a7cd2ed7117e698}
 \SetPageHash{3}{2e3d9f76e7d1a8c833947bec96f9455dab2dff34afabbe469e626a30d85bb89d}
-\SetPageHash{4}{7dcd0ecf2779a37ea3ca19c543cba0f63476d7181126aa2abbd87eeb86793b6f}
+\SetPageHash{4}{a8e635808e00443778a728673d1685d2a0836a66c8f4f39fe66f0667b0cc70c3}
 
 \begin{document}
 
@@ -76,10 +76,10 @@
   \item \textbf{C}\quad 第三行建议保留并行设置，记录各进程使用的资源名排查重名。
   \item \textbf{A}\quad 保留失败时的次序并移除其余用例，可检验这一对能否单独重现故障。
   \item \textbf{D}\quad 用户只报告了单跑和整组的结果，尚未确定“那一对”中的前序用例。
-  \item \textbf{B}\quad 开幕当天展厅无网，馆员要求按现场条件试用。
-  \item \textbf{C}\quad 操场原图刚在联网时打开过，展机留有副本。
-  \item \textbf{A}\quad 清除留存副本后，断网查看原图可检验展览包自身的内容。
-  \item \textbf{D}\quad 食堂原图在第一次断网时显示为灰框，馆员先复查这一项。
+  \item \textbf{B}\quad 重试从函数开头再次执行，写库与通知均在其中。
+  \item \textbf{C}\quad 通知替身首次调用即成功，测试未触发重试。
+  \item \textbf{A}\quad 先触发通知重试，再核对余额，可检验积分是否重复入账。
+  \item \textbf{D}\quad 首次超时时通知可能已发出，同一业务键供下游去重。
   \item \textbf{B}\quad 处理函数在 250\,ms 进入、262\,ms 返回，相隔 12 毫秒。
   \item \textbf{A}\quad 从函数返回至客户端读完响应体，用时为 $310 - 262 = 48$ 毫秒。
   \item \textbf{C}\quad 新字段名 \texttt{handler\_duration\_ms} 指明计时对象为处理函数。
@@ -213,27 +213,27 @@
 \begin{quote}
 \vspace{-2pt}
 \noindent\textbf{Paragraph 1:}\par
-\kaishu\noindent\hspace*{2em}我请她先撤掉那三个空格，把原稿按日志里的位置分成两块。分两次送进去，“桥”坏了；把同样的字节合起来再送一次，字就回来了。我翻到读取循环，每读一块，程序都当作一段完整文字解码。读到第一块末尾，它已经把那一个字节换成了替换符，后两个字节来时，前一个早已交给了排版程序。\par
+\kaishu\noindent\hspace*{2em}先把文件头的三个空格撤掉。它们挪动了分块位置，“桥”避开了块尾，“街”又被切开。“桥”的三个字节都在。第一块末尾只读到 \texttt{E6}，程序就输出了替换符；下一块开头的 \texttt{A1 A5} 已经接不回去。单测一次传入整串，跑十次也没有一次从字中间断开。\par
 \smallskip
 \noindent\textbf{Paragraph 2:}\par
-\kaishu\noindent\hspace*{2em}校样送印前，编辑又发来那份没有加空格的稿子。我改用能跨块接着读的解码器，把“桥”分别切在第一个和第二个字节之后，逐字核对，两份预览都与原稿相同。她看过校样，点了送印。那份原稿后来进了测试目录，旁边只附了一行说明：分两次读。
+\kaishu\noindent\hspace*{2em}改动可以收在解码这一步。每份文件用一个增量解码器，逐块送入字节，让它把块尾未读全的字符留到下一块，文件读完再结束解码。用原稿补两个用例：一次在 \texttt{E6} 后切开，一次在 \texttt{A1} 后切开，都分两次送入，将完整输出与原文逐字核对。两条都通过，就能确认“桥”的两个切分位置都已覆盖。
 \vspace{-2pt}
 \end{quote}
 
 \noindent\textbf{评分项目与五档标准：}
 \begin{enumerate}[label=（\arabic*）, leftmargin=2.8em, labelsep=0pt, itemsep=0.5pt, topsep=1.5pt]
-  \item \textbf{情节承接（5 分）：}接续分块复现试验与送印前复核，两段先后顺序及人物所知与段首连贯。
-  \item \textbf{故障判断（7 分）：}写出可区分原因的排查动作（3 分），结合字节完整、分块后出错及空格平移坏字位置的现象说明根因（4 分）。
-  \item \textbf{处理与复验（8 分）：}处理方法能保全跨块多字节字符（4 分），并用原稿或跨块切分边界样例核对预览结果（4 分，其他合理修复方案同等给分）。
-  \item \textbf{叙述与表达（5 分）：}技术细节与因果关系准确（3 分），语体克制自然，结尾有前文细节可据（2 分）。
+  \item \textbf{故障判断（7 分）：}说明应撤去空格及其平移分块位置的作用（3 分），结合 \texttt{E6} 与 \texttt{A1 A5} 解释逐块独立解码为何输出替换符（4 分）。
+  \item \textbf{单测分析（4 分）：}指出整串一次传入绕过了跨块情形（3 分），说明重复十次未改变分块方式（1 分）。
+  \item \textbf{修改与验证（10 分）：}跨块保留解码状态并在文件末尾结束解码（4 分），覆盖两个切分位点（4 分），逐字核对完整输出（2 分；手动暂存块尾残余字节等等效方案同等给分）。
+  \item \textbf{表达与结论（4 分）：}以助理身份直接回答用户、步骤清楚（2 分），结论口径与实际覆盖范围一致（2 分）。
 \end{enumerate}
 
 \begin{itemize}[leftmargin=1.8em, itemsep=0.5pt, topsep=1.5pt]
-  \item \textbf{第五档（21--25 分）：}两段完整连贯；排查动作有辨别力，根因判断、跨块处理与边界复验相互印证；叙述平实克制，收束有前文可据。
-  \item \textbf{第四档（16--20 分）：}根因判断合理，处理与复核经过清楚；个别复验细节略简，但整体因果闭环完整。
-  \item \textbf{第三档（11--15 分）：}能写出分块读取与乱码的关系，处理方法或复验过程交代不足。
-  \item \textbf{第二档（6--10 分）：}叙事与材料有关，仍停留在重试、手动增删空格等权宜处理，根因交代不清。
-  \item \textbf{第一档（1--5 分）：}仅有零散叙述，未能有效续接所给段首句。
+  \item \textbf{第五档（21--25 分）：}两段答复完整连贯；根因与单测盲区判断准确，增量解码改法可行，两个切分位点均有验证，结论收口准确。
+  \item \textbf{第四档（16--20 分）：}根因判断与改法正确；个别切分位点、输出核对或文件末尾收尾处理交代略简。
+  \item \textbf{第三档（11--15 分）：}能指出多字节字符跨块被切开并给出相关改法，单测盲区分析或回归验证较笼统。
+  \item \textbf{第二档（6--10 分）：}能看出分块与乱码有关，未能说明如何跨块保留残余字节或如何验证修复。
+  \item \textbf{第一档（1--5 分）：}仅有重试、调整空格数量等零散建议，未能有效续接段首句。
 \end{itemize}
 
 \end{document}
