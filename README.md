@@ -1,6 +1,6 @@
 # 2026年普通高等学校招生全国统一考试 · 外语（GPT 语）
 
-模仿中国高考新课标Ⅰ卷外语（满分 150 分，考试时间 120 分钟）真题排版的冷面讽刺试卷，由 **Antigravity × OpenAI Codex (`gpt-6.2-astra`)** 联合命题撰稿。全卷所有题型统一采用 **“用户消息 → GPT 回复”** 的理解与写作体例（除听力 Text 2 一箱梨外，全卷聚焦写代码与 Codex 结对排障），以 100% 真题考务的克制冷面口吻，原汁原味考查当代 GPT / Codex 家族最具辨识度的工程口癖与行为特征（`SHA-256` 恋物癖、`收口 / 钉死 / 口径 / 落盘`、窄口径诚实、顺手越界、以及技术考古文中的 `气质 / 两个世界 / 采样哲学 / 时间语义 / 只是一条线索`）。
+模仿中国高考新课标Ⅰ卷外语（满分 150 分，考试时间 120 分钟）真题排版的冷面讽刺试卷，由 **Antigravity × OpenAI Codex (`gpt-6.2-astra`)** 联合命题撰稿。全卷所有题型（含听力、阅读、完形、语填与两节写作）统一采用 **`user` / `assistant`** 会话与回复体例，聚焦写代码与 Codex 结对排障（辅以听力 Text 2 一箱梨一处点睛切片），以 100% 真题考务的克制冷面口吻，原汁原味考查当代 GPT / Codex 家族最具辨识度的工程口癖与行为特征（`SHA-256` 恋物癖、`收口 / 钉死 / 口径 / 落盘`、窄口径诚实、顺手越界、以及技术考古文中的 `气质 / 两个世界 / 采样哲学 / 时间语义 / 只是一条线索`）。
 
 ## 试卷结构（对标新课标Ⅰ卷外语，满分 150 分）
 
@@ -23,16 +23,16 @@
 由于将文件自身的 `SHA-256` 写入文件并重新编译会改变文件字节，本卷采用双层校验口径：
 
 1. **加印前基线摘要（印于试卷第 1 页《注意事项》第 5 条）**
-   - `exam.tex`（加印前基线）：`21a39ad35322afd1731c02f142ec26beda248451253ff3eaf0ccec271e050ec6`
-   - `exam.pdf`（加印前基线）：`d0963b84dee1114f72c289b7cf5434b670faf155adec9f2d37f65fde5622239b`
+   - `exam.tex`（加印前基线）：`09b2d0124feca14c368ea51f7c5c74a3ec87826e40682330aa6ac2e18fcae7a8`
+   - `exam.pdf`（加印前基线）：`40ceaea2f5776ed9f480bbfb42aabeb197deb53dd786a28e33a5c9db4c31ce0d`
 2. **加印重编后的成卷文件字节摘要（可直接用 `sha256sum` 核对）**
 
 ```text
-0fdeade9f798f00755da0cebd68e04aa7e07fc978a1422a6bfd3ec93016de3d8  exam.tex
-f84ea5a8f4a230ea513a06067a6bfb7dd1f62599b3a3cf291b74666f2c54eaaa  exam.pdf
-ac42328a3bbf0e23d780fdc9bd21870cc931963f904616a1ece3474cbbb8b22a  answer_key.tex
-b138f892085243eea03e9975387e68dd7b03c5f2b67bc302a4cfaffc83228a60  answer_key.pdf
-a538b5c1853d20b692ccb8c56508bb69e887641ce9c07061382b346807cca32f  gaokao-exam.sty
+5be805c4006c597062d5e9702ff79f3963a3c2e2b4d035fb6e3c93ce42c547f2  exam.tex
+16be403b7deea063ac89c4676fe7225c8e42eb5eaf44ddc07de2553bbbdfda71  exam.pdf
+915fee833f6802120ee3d23fb9636e79900d00b9f315e0071c182fbd46474907  answer_key.tex
+7a88ed3c3b111c00c0697ea1bef543915f7f77555218413890b3fcbc57b001cd  answer_key.pdf
+7f65c5020fa73e3b052e5678dcdd0a05b4457b19a657bf2b57ed0c07d6cd4351  gaokao-exam.sty
 ```
 
 3. **各页页脚 `本页正文 SHA-256` 计算口径**
